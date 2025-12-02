@@ -33,5 +33,21 @@ def secciones_distritos_con_extranjeros_nacionalidades(registros:List[RegistroEx
 
 # - EJERCICIO 4:
 def total_extranjeros_por_pais(registros:List[RegistroExtranjeria]) -> dict[str, int]:
-    total = dict()
-    paises = set(registro)
+    dict_aux = dict()
+    for registro in registros:
+        if registro.pais in dict_aux:
+            dict_aux[registro.pais] += (registro.hombres + registro.mujeres)
+        else:
+            dict_aux[registro.pais] = (registro.hombres + registro.mujeres)
+    return dict_aux
+
+# - EJERCICIO 5:
+def top_n_extranjeria(registros:List[RegistroExtranjeria], n:int = 3) -> List[tuple]:
+    dict_aux = total_extranjeros_por_pais(registros)
+    mas_poblacion = [(clave, valor) for clave, valor in dict_aux.items()]
+    mas_poblacion.sort(key=lambda m:m[1], reverse=True)
+    return mas_poblacion[:n]
+
+# - EJERCICIO 6:
+def barrios_mas_multicultural(registros:List[RegistroExtranjeria]) -> str:
+    
